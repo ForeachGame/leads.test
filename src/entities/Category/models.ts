@@ -5,27 +5,30 @@ export type TCategory = {
     id: number,
     parent?: number | null,
     title: string,
-    articles: TArticle[]
+    articles: TArticle[],
+    articlesCount?: number
 }
 
 type CategoryState = {
-    categories: TCategory[]
+    categories: TCategory[],
+    activeCategory: number | null
 }
 
 const state: CategoryState = {
-    categories: []
+    categories: [],
+    activeCategory: null
 }
 
 const getters = {
     getCategories: (state: CategoryState): TCategory[] => {
         return state.categories
+    },
+    getActiveCategory: (state: CategoryState): number | null => {
+        return state.activeCategory
     }
 }
 
 const mutations = {
-    getCategories (state:CategoryState, categories: TCategory[]): void {
-        state.categories = categories
-    },
     createCategory (state: CategoryState, category: TCategory): void {
         state.categories.push(category)
     },
@@ -34,6 +37,14 @@ const mutations = {
     },
     removeCategories (state: CategoryState): void {
         state.categories = []
+    },
+    setActiveCategory (state: CategoryState, id: number | null): void {
+        state.activeCategory = id
+    },
+    removeCategoryArticle (state: CategoryState, id: number): void {
+        const index = state.categories.findIndex(category => category.id === state.activeCategory)
+        console.log(index)
+        state.categories[index].articles = state.categories[index].articles.filter((article) => article.id !== id)
     }
 }
 
@@ -46,6 +57,13 @@ const actions = {
     },
     removeCategories ({ commit }: { commit: Commit }) {
         commit('removeCategories')
+    },
+    setActiveCategory ({ commit }: { commit: Commit }, id: number | null) {
+        commit('setActiveCategory', id)
+    },
+    removeCategoryArticle ({ commit }: { commit: Commit }, id: number) {
+        commit('removeCategoryArticle', id)
+        commit('removeActiveCategoryArticle', id)
     }
 }
 

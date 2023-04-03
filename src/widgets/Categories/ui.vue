@@ -13,8 +13,17 @@ export default Vue.extend({
         }
     },
     computed: {
-        categories () {
+        categories ():TCategory {
             return this.$store.getters.getCategories.filter((item: TCategory) => item.parent === this.parent)
+        },
+        articlesCount (): number {
+            return this.$store.getters.getAllArticlesCount
+        }
+    },
+    methods: {
+        showAll () {
+            this.$store.dispatch('setActiveCategory', null)
+            this.$store.dispatch('setActiveCategoryArticles', null)
         }
     }
 })
@@ -22,6 +31,7 @@ export default Vue.extend({
 
 <template>
     <div class="WCategories">
+        <div class="all" @click="showAll">Все ({{ articlesCount }})</div>
         <transition-group name="slide">
             <e-category
                 v-for="category in categories"
@@ -42,5 +52,8 @@ export default Vue.extend({
 .slide-enter, .slide-leave-to /* .list-leave-active до версии 2.1.8 */ {
     opacity: 0;
     transform: translateX(30px);
+}
+.all {
+    cursor: pointer;
 }
 </style>
