@@ -15,7 +15,11 @@ export default Vue.extend({
 
 <template>
     <div class="FArticlesSearch">
-        <s-input placeholder="Поиск..." @input="search($event)" />
+        <s-input
+            placeholder="Поиск..."
+            @input="search($event)"
+            :clear="true"
+        />
     </div>
 </template>
 
