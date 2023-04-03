@@ -2,6 +2,7 @@
 import Vue from 'vue'
 import { SButton } from '@/shared'
 import CreateCategoryModal from '@/features/CreateCategory/CreateCategoryModal.vue'
+import { TCategory } from '@/entities/Category/models'
 
 export default Vue.extend({
     name: 'FCreateCategory',
@@ -12,6 +13,9 @@ export default Vue.extend({
     methods: {
         toggleCreateCategoryModal () {
             this.showModal = !this.showModal
+        },
+        createCategory (category: TCategory) {
+            this.$store.dispatch('createCategory', category)
         }
     }
 })
@@ -24,6 +28,7 @@ export default Vue.extend({
             <create-category-modal
                 v-if="showModal"
                 @closeModal="toggleCreateCategoryModal"
+                @create="createCategory($event)"
             />
         </transition>
     </div>

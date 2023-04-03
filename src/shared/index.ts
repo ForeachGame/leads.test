@@ -1,7 +1,9 @@
-import { SButton } from './Button/index'
-import { SInput } from './Input/index'
+import { SButton } from './Button'
+import { SInput } from './Input'
+import { SSelect } from './Select'
 
 export {
     SButton,
-    SInput
+    SInput,
+    SSelect
 }
