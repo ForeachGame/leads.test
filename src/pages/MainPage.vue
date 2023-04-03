@@ -52,6 +52,10 @@ export default Vue.extend({
         display: grid;
         gap: 16px;
         grid-template-columns: 320px 1fr;
+        padding: 20px;
+        @media (max-width: 1024px) {
+            grid-template-columns: 1fr;
+        }
     }
 }
 </style>

@@ -46,6 +46,7 @@ export default Vue.extend({
 <template>
     <div class="WPagination">
         <router-link
+            class="pagination-link"
             :to="{ path: url, query: { page:goPrev } }"
             :disabled="!stopPrev"
             :event="stopPrev ? 'click' : ''"
@@ -58,6 +59,7 @@ export default Vue.extend({
                 :key="page"
             >
                 <router-link
+                    class="pagination-link"
                     :to="{ path: url, query: { page:page } }">
                     {{ page }}
                 </router-link>
@@ -65,6 +67,7 @@ export default Vue.extend({
         </ul>
 
         <router-link
+            class="pagination-link"
             :to="{ path: url, query: { page:this.goForward } }"
             :disabled="!stopForward"
             :event="stopForward ? 'click' : ''"
@@ -74,6 +77,29 @@ export default Vue.extend({
     </div>
 </template>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.WPagination {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.pagination-link {
+}
+.pagination {
+    padding: 0;
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 0;
+    li {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+}
 </style>

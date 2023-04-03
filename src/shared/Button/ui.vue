@@ -49,6 +49,7 @@ button {
     cursor: pointer;
     border: none;
     padding: 7px;
+    justify-content: center;
     &.border {
         border: var(--vs-border-width) var(--vs-border-style) var(--vs-border-color);
         border-radius: var(--vs-border-radius);
@@ -56,6 +57,12 @@ button {
     &.no-padding {
         padding: 0;
         margin: 0;
+    }
+    &:active {
+        background: #aaa;
+    }
+    &:hover {
+        border-color: #333333;
     }
 }
 </style>

@@ -14,7 +14,7 @@ export default Vue.extend({
     }),
     computed: {
         articleList () {
-            return this.$store.getters.getArticles
+            return this.$store.getters.getAllArticles
         },
         categoryList () {
             return this.$store.getters.getCategories
@@ -98,6 +98,7 @@ export default Vue.extend({
     margin: auto;
     width: 100%;
     height: 100%;
+    z-index: 100;
     .create-category__form {
         position: relative;
         top: 64px;
@@ -109,6 +110,9 @@ export default Vue.extend({
         background: #fff;
         border: 2px solid #333333;
         padding: 16px;
+        @media (max-width: 640px) {
+            margin: auto 16px;
+        }
         .close-modal {
             position: absolute;
             top: 0;
