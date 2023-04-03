@@ -31,7 +31,7 @@ export default Vue.extend({
             return this.$store.getters.getCategories.filter((item: TCategory) => item.parent === this.id)
         },
         getClearArticlesCount (): number {
-            return [...new Set(this.arrArticles)].length
+            return this.$store.getters.getArticlesCount(this.id)
         },
         activeCategory (): number {
             return this.$store.getters.getActiveCategory
@@ -40,14 +40,12 @@ export default Vue.extend({
     methods: {
         removeCategory () {
             this.toggleModal()
-            this.$emit('articlesCount', [])
+            if (this.activeCategory === this.$props.id) {
+                this.$store.dispatch('setActiveCategory', null)
+                this.$store.dispatch('setActiveCategoryArticles', null)
+            }
             this.$store.dispatch('removeCategory', this.$props.id)
-        },
-        countArticles (arr: number[]) {
-            arr.forEach((e: number) => {
-                this.arrArticles.push(e)
-            })
-            this.$emit('articlesCount', this.arrArticles)
+            this.$store.commit('resetCategoryArticlesCount')
         },
         setActiveCategory () {
             this.$store.dispatch('setActiveCategory', this.id)
@@ -56,21 +54,15 @@ export default Vue.extend({
                 arrArticlesIDs = (this.articles as TArticle[]).map((item: TArticle) => item.id)
             }
             this.$store.dispatch('setActiveCategoryArticles', arrArticlesIDs)
-            this.$router.push({ path: '/' })
+            if (Object.prototype.hasOwnProperty.call(this.$route.query, 'page')) {
+                this.$router.push({ path: '/' })
+            }
         },
         toggleShowChild () {
             this.showChild = !this.showChild
         },
         toggleModal () {
             this.showModal = !this.showModal
-        }
-    },
-    mounted () {
-        (this.articles as TArticle[]).forEach((e: TArticle) => {
-            this.arrArticles.push(e.id)
-        })
-        if (this.parent) {
-            this.$emit('articlesCount', this.arrArticles)
         }
     }
 })
@@ -79,7 +71,7 @@ export default Vue.extend({
 <template>
     <div class="ECategory">
         <div class="category">
-            <div class="category__title" @click.self="setActiveCategory()" :class="[activeCategory === id && 'active']">
+            <div class="category__title" @click.self="activeCategory !== id && setActiveCategory()" :class="[activeCategory === id && 'active']">
                 {{ title }} ({{ getClearArticlesCount }})
                 <span class="category__title__child-button"
                       v-if="childrenCategories.length > 0"
@@ -98,7 +90,6 @@ export default Vue.extend({
                 :parent="child.parent"
                 :title="child.title"
                 :articles="child.articles"
-                @articlesCount="countArticles($event)"
             />
         </div>
         <transition name="bounce">

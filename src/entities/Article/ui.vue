@@ -43,6 +43,7 @@ export default Vue.extend({
         categoryRemove () {
             this.toggleModal()
             this.$store.dispatch('removeCategoryArticle', this.id)
+            this.$store.commit('resetCategoryArticlesCount')
         },
         toggleModal () {
             this.showModal = !this.showModal
