@@ -11,17 +11,25 @@ export type TArticle = {
 
 type ArticleState = {
     articles: TArticle[],
-    search: string
+    search: string,
+    activeCategoryArticles: number[] | null
 }
 
 const state: ArticleState = {
     articles: [],
-    search: ''
+    search: '',
+    activeCategoryArticles: []
 }
 
 const getters = {
     getArticles: (state: ArticleState): TArticle[] => {
-        return state.articles.filter(item => item.title.indexOf(state.search) !== -1)
+        return state.articles.filter(item => item.title.indexOf(state.search) !== -1 && (state.activeCategoryArticles?.includes(item.id) || state.activeCategoryArticles === null || state.activeCategoryArticles === []))
+    },
+    getAllArticlesCount: (state: ArticleState): number => {
+        return state.articles.length
+    },
+    getAllArticles: (state: ArticleState): TArticle[] => {
+        return state.articles
     }
 }
 
@@ -35,6 +43,12 @@ const mutations = {
     },
     searchItems (state: ArticleState, searchText: string): void {
         state.search = searchText
+    },
+    setActiveCategoryArticles (state: ArticleState, value: number[] | null): void {
+        state.activeCategoryArticles = value
+    },
+    removeActiveCategoryArticle (state: ArticleState, id: number) {
+        state.activeCategoryArticles = state.activeCategoryArticles?.filter(item => item !== id) ?? null
     }
 }
 
@@ -52,6 +66,9 @@ const actions = {
     },
     searchItems ({ commit }: { commit: Commit }, searchText: string) {
         commit('searchItems', searchText)
+    },
+    setActiveCategoryArticles ({ commit }: { commit: Commit }, value: number[] | null) {
+        commit('setActiveCategoryArticles', value)
     }
 }
 

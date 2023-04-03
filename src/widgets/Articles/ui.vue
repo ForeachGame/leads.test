@@ -43,18 +43,21 @@ export default Vue.extend({
     .articles-list {
         display: grid;
         gap: 16px;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-        @media (max-width: 1200px) {
-            grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 320px 320px 320px 320px;
+        @media (max-width: 1700px) {
+            grid-template-columns: 320px 320px 320px;
         }
-        @media (max-width: 992px) {
+        @media (max-width: 1360px) {
             grid-template-columns: 1fr 1fr;
+        }
+        @media (max-width: 1024px) {
+            grid-template-columns: 1fr 1fr 1fr;
         }
         @media (max-width: 720px) {
             grid-template-columns: 1fr 1fr;
         }
         @media (max-width: 520px) {
-            grid-template-columns: 1fr;
+            grid-template-columns: auto;
         }
     }
 }

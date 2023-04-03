@@ -30,6 +30,9 @@ export default Vue.extend({
     methods: {
         addLike () {
             this.$store.dispatch('addLike', this.$props)
+        },
+        categoryRemove () {
+            this.$store.dispatch('removeCategoryArticle', this.id)
         }
     }
 })
@@ -44,7 +47,7 @@ export default Vue.extend({
         <div class="description">{{ description }}</div>
         <div class="buttons">
             <SButton @click="addLike">Like ({{ likes }})</SButton>
-            <div class="delete">Удалить из категории</div>
+            <SButton @click="categoryRemove">Remove</SButton>
         </div>
     </div>
 </template>
@@ -56,6 +59,10 @@ export default Vue.extend({
     .title {
         font-size: 18px;
         font-weight: 700;
+        height: 24px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
     .image {
         display: flex;
@@ -71,8 +78,10 @@ export default Vue.extend({
         font-weight: 400;
     }
     .buttons {
-        .like {}
-        .delete {}
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
     }
 }
 </style>
