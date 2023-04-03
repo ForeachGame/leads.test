@@ -3,6 +3,9 @@ import Vue from 'vue'
 
 export default Vue.extend({
     name: 'SInput',
+    data: () => ({
+        value: ''
+    }),
     props: {
         placeholder: {
             type: String,
@@ -15,9 +18,10 @@ export default Vue.extend({
 <template>
     <div class="SInput">
         <input
+            v-model="value"
             type="text"
             :placeholder="placeholder"
-            @input="$emit('input')"
+            @input="$emit('input', value)"
         />
     </div>
 </template>

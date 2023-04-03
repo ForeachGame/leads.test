@@ -10,16 +10,18 @@ export type TArticle = {
 }
 
 type ArticleState = {
-    articles: TArticle[]
+    articles: TArticle[],
+    search: string
 }
 
 const state: ArticleState = {
-    articles: []
+    articles: [],
+    search: ''
 }
 
 const getters = {
     getArticles: (state: ArticleState): TArticle[] => {
-        return state.articles
+        return state.articles.filter(item => item.title.indexOf(state.search) !== -1)
     }
 }
 
@@ -30,6 +32,9 @@ const mutations = {
     addLike (state: ArticleState, article: TArticle): void {
         const index = state.articles.findIndex(item => item.id === article.id)
         state.articles[index].likes += 1
+    },
+    searchItems (state: ArticleState, searchText: string): void {
+        state.search = searchText
     }
 }
 
@@ -44,6 +49,9 @@ const actions = {
     },
     addLike ({ commit }: { commit: Commit }, article: TArticle) {
         commit('addLike', article)
+    },
+    searchItems ({ commit }: { commit: Commit }, searchText: string) {
+        commit('searchItems', searchText)
     }
 }
 
