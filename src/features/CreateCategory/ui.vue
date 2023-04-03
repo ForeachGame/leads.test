@@ -1,13 +1,14 @@
 <script lang="ts">
 import Vue from 'vue'
-import { SInput, SButton } from '@/shared'
+import { SButton } from '@/shared'
+import CreateCategoryModal from '@/features/CreateCategory/CreateCategoryModal.vue'
 
 export default Vue.extend({
     name: 'FCreateCategory',
     data: () => ({
         showModal: false
     }),
-    components: { SInput, SButton },
+    components: { CreateCategoryModal, SButton },
     methods: {
         toggleCreateCategoryModal () {
             this.showModal = !this.showModal
@@ -19,29 +20,31 @@ export default Vue.extend({
 <template>
     <div class="CreateCategory">
         <s-button @click="toggleCreateCategoryModal">Добавить категорию</s-button>
-        <div
-            v-if="showModal"
-            class="create-category__modal"
-        >
-            <s-input
-                placeholder="Заголовок категории"
+        <transition name="bounce">
+            <create-category-modal
+                v-if="showModal"
+                @closeModal="toggleCreateCategoryModal"
             />
-            <s-button>Добавить категорию</s-button>
-        </div>
+        </transition>
     </div>
 </template>
 
-<style scoped>
-.create-category__modal {
-    position: fixed;
-    top: 64px;
-    left: 0;
-    right: 0;
-    margin: auto;
-    min-width: 320px;
-    max-width: 640px;
-    background: #fff;
-    border: 2px solid #333333;
-    padding: 16px;
+<style lang="scss" scoped>
+.bounce-enter-active {
+    animation: bounce-in 0.5s;
+}
+.bounce-leave-active {
+    animation: bounce-in 0.5s reverse;
+}
+@keyframes bounce-in {
+    0% {
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1.25);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 </style>
