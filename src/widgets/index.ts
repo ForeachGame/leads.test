@@ -1,9 +1,11 @@
-import { WCategories } from './Categories/index'
-import { WNavbar } from './Navbar/index'
-import { WPagination } from './Pagination/index'
+import { WCategories } from './Categories'
+import { WNavbar } from './Navbar'
+import { WPagination } from './Pagination'
+import { WArticles } from './Articles'
 
 export {
     WCategories,
     WNavbar,
-    WPagination
+    WPagination,
+    WArticles
 }

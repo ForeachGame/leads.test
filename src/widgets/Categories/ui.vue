@@ -1,30 +1,31 @@
 <script lang="ts">
 import Vue from 'vue'
-import { EArticle, ECategory } from '@/entities/index'
+import { ECategory } from '@/entities'
 
 export default Vue.extend({
     name: 'WCategories',
-    components: { EArticle, ECategory }
+    components: { ECategory },
+    computed: {
+        categories () {
+            return this.$store.getters.getCategories
+        }
+    }
 })
 </script>
 
 <template>
     <div class="WCategories">
-        <e-category />
+        <e-category
+            v-for="category in categories"
+            :key="category.id"
+            :id="category.id"
+            :title="category.title"
+        />
         <div>Дочерние категории</div>
-        <div class="articles">
-            <e-article />
-            <e-article />
-            <e-article />
-            <e-article />
-        </div>
+
     </div>
 </template>
 
 <style lang="scss" scoped>
-.articles {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-}
+
 </style>

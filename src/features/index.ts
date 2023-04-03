@@ -1,5 +1,7 @@
-import { FArticlesSearch } from './ArticlesSearch/index'
+import { FArticlesSearch } from './ArticlesSearch'
+import { FCreateCategory } from './CreateCategory'
 
 export {
-    FArticlesSearch
+    FArticlesSearch,
+    FCreateCategory
 }

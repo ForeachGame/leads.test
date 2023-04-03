@@ -1,14 +1,17 @@
 <script lang="ts">
 import Vue from 'vue'
-
 export default Vue.extend({
-    name: 'ECategory'
+    name: 'ECategory',
+    props: {
+        id: Number,
+        title: String
+    }
 })
 </script>
 
 <template>
     <div class="ECategory">
-        <div>Заголовок категории</div>
+        <div>{{ title }}</div>
     </div>
 </template>
 

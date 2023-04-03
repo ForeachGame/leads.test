@@ -1,20 +1,49 @@
 <script lang="ts">
 import Vue from 'vue'
+import { SButton } from '@/shared'
 
 export default Vue.extend({
-    name: 'EArticle'
+    name: 'EArticle',
+    components: { SButton },
+    props: {
+        id: {
+            type: Number,
+            required: true
+        },
+        title: {
+            type: String,
+            required: true
+        },
+        image: {
+            type: String,
+            required: true
+        },
+        description: {
+            type: String,
+            required: true
+        },
+        likes: {
+            type: Number,
+            required: true
+        }
+    },
+    methods: {
+        addLike () {
+            this.$store.dispatch('addLike', this.$props)
+        }
+    }
 })
 </script>
 
 <template>
     <div class="EArticle">
-        <div class="image">
-            <img src="/assets/images/default-image.jpg" alt="Заголовок" />
-        </div>
-        <div class="title">Заголовок</div>
-        <div class="description">Описание</div>
+        <picture class="image">
+            <img loading="lazy" :src="image" alt="Заголовок" />
+        </picture>
+        <div class="title">{{ title }}</div>
+        <div class="description">{{ description }}</div>
         <div class="buttons">
-            <div class="like">Лайк</div>
+            <SButton @click="addLike">Like ({{ likes }})</SButton>
             <div class="delete">Удалить из категории</div>
         </div>
     </div>
@@ -29,11 +58,12 @@ export default Vue.extend({
         font-weight: 700;
     }
     .image {
-        max-width: 280px;
         display: flex;
         img {
             display: block;
-            max-width: 100%;
+            aspect-ratio: 5 / 3;
+            width: 100%;
+            object-fit: cover;
         }
     }
     .description {

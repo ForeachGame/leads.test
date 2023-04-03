@@ -1,13 +1,13 @@
 import { Commit } from 'vuex'
 
-export type Category = {
+export type TCategory = {
     id: number,
     parent?: number | null,
     title: string
 }
 
 type CategoryState = {
-    categories: Category[]
+    categories: TCategory[]
 }
 
 const state: CategoryState = {
@@ -15,32 +15,35 @@ const state: CategoryState = {
 }
 
 const getters = {
-    getCategories: (state: CategoryState): Category[] => {
+    getCategories: (state: CategoryState): TCategory[] => {
         return state.categories
     }
 }
 
 const mutations = {
-    getCategories (state:CategoryState, categories: Category[]): void {
+    getCategories (state:CategoryState, categories: TCategory[]): void {
         state.categories = categories
     },
-    createCategory (state: CategoryState, category: Category): void {
+    createCategory (state: CategoryState, category: TCategory): void {
         state.categories.push(category)
     },
-    removeCategory (state: CategoryState, category: Category): void {
-        state.categories = state.categories.filter((item: Category) => item.id !== category.id)
+    removeCategory (state: CategoryState, category: TCategory): void {
+        state.categories = state.categories.filter((item: TCategory) => item.id !== category.id)
+    },
+    removeCategories (state: CategoryState): void {
+        state.categories = []
     }
 }
 
 const actions = {
-    createCategory ({ commit }: { commit: Commit }, category: Category) {
+    createCategory ({ commit }: { commit: Commit }, category: TCategory) {
         commit('createCategory', category)
     },
-    getCategories ({ commit }: { commit: Commit }, categories: Category[]) {
-        commit('getCategories', categories)
-    },
-    removeCategory ({ commit }: { commit: Commit }, category: Category) {
+    removeCategory ({ commit }: { commit: Commit }, category: TCategory) {
         commit('removeCategory', category)
+    },
+    removeCategories ({ commit }: { commit: Commit }) {
+        commit('removeCategories')
     }
 }
 

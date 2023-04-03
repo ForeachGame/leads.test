@@ -1,17 +1,15 @@
 <script lang="ts">
 import Vue from 'vue'
-import { FArticlesSearch } from '@/features'
-import { SButton, SInput } from '@/shared/index'
+import { FArticlesSearch, FCreateCategory } from '@/features'
+import { SButton } from '@/shared/index'
 
 export default Vue.extend({
     name: 'WNavbar',
-    components: { SButton, SInput, FArticlesSearch },
+    components: { SButton, FArticlesSearch, FCreateCategory },
     methods: {
-        onClick (): void {
-            console.log(123)
-        },
-        onInput (): void {
-            console.log(123)
+        reset (): void {
+            this.$store.dispatch('getArticles')
+            this.$store.dispatch('removeCategories')
         }
     }
 })
@@ -20,10 +18,10 @@ export default Vue.extend({
 <template>
     <div class="WNavbar">
         <f-articles-search />
-        <s-button @click="onClick">Кнопка</s-button>
-        <s-input @input="onInput" />
-        <div>Добавить категорию</div>
-        <div>Сброс до начальных настроек</div>
+        <f-create-category />
+        <div>
+            <s-button @click="reset">Сброс</s-button>
+        </div>
     </div>
 </template>
 
