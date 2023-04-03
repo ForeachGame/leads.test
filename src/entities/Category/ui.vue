@@ -32,6 +32,9 @@ export default Vue.extend({
         },
         getClearArticlesCount (): number {
             return [...new Set(this.arrArticles)].length
+        },
+        activeCategory (): number {
+            return this.$store.getters.getActiveCategory
         }
     },
     methods: {
@@ -53,6 +56,7 @@ export default Vue.extend({
                 arrArticlesIDs = (this.articles as TArticle[]).map((item: TArticle) => item.id)
             }
             this.$store.dispatch('setActiveCategoryArticles', arrArticlesIDs)
+            this.$router.push({ path: '/' })
         },
         toggleShowChild () {
             this.showChild = !this.showChild
@@ -75,7 +79,7 @@ export default Vue.extend({
 <template>
     <div class="ECategory">
         <div class="category">
-            <div class="category__title" @click.self="setActiveCategory()">
+            <div class="category__title" @click.self="setActiveCategory()" :class="[activeCategory === id && 'active']">
                 {{ title }} ({{ getClearArticlesCount }})
                 <span class="category__title__child-button"
                       v-if="childrenCategories.length > 0"
@@ -118,6 +122,9 @@ export default Vue.extend({
         align-items: center;
         position: relative;
         cursor: pointer;
+        &.active {
+            font-weight: 700;
+        }
         .category__title__child-button {
             position: absolute;
             transform: rotate(180deg);

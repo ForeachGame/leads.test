@@ -12,6 +12,7 @@ export default Vue.extend({
             this.$store.dispatch('removeCategories')
             this.$store.dispatch('setActiveCategory', null)
             this.$store.dispatch('setActiveCategoryArticles', null)
+            this.$router.push({ path: '/' })
         }
     }
 })

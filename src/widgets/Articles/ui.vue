@@ -1,10 +1,12 @@
 <script lang="ts">
 import Vue from 'vue'
 import { EArticle } from '@/entities'
+import { SLoader } from '@/shared'
+import { TArticle } from '@/entities/Article/models'
 
 export default Vue.extend({
     name: 'WArticles',
-    components: { EArticle },
+    components: { EArticle, SLoader },
     props: {
         limit: {
             type: Number,
@@ -12,10 +14,13 @@ export default Vue.extend({
         }
     },
     computed: {
-        articles () {
+        articles (): TArticle {
             const start = ((Number(this.$route.query.page || '1')) - 1) * this.limit
             const end = start + this.limit
             return this.$store.getters.getArticles.slice(start, end)
+        },
+        allArticles (): number {
+            return this.$store.getters.getAllArticlesCount
         }
     }
 })
@@ -35,6 +40,7 @@ export default Vue.extend({
                 :likes="article.likes"
             />
         </div>
+        <s-loader v-if="allArticles < 1"/>
     </div>
 </template>
 

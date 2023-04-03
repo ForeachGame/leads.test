@@ -18,6 +18,9 @@ export default Vue.extend({
         },
         articlesCount (): number {
             return this.$store.getters.getAllArticlesCount
+        },
+        activeCategory (): number {
+            return this.$store.getters.getActiveCategory
         }
     },
     methods: {
@@ -31,7 +34,7 @@ export default Vue.extend({
 
 <template>
     <div class="WCategories">
-        <div class="all" @click="showAll">Все ({{ articlesCount }})</div>
+        <div class="all" :class="[!activeCategory && 'active']" @click="showAll">Все ({{ articlesCount }})</div>
         <transition-group name="slide">
             <e-category
                 v-for="category in categories"
@@ -55,5 +58,8 @@ export default Vue.extend({
 }
 .all {
     cursor: pointer;
+    &.active {
+        font-weight: 700;
+    }
 }
 </style>
