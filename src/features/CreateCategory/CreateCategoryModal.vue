@@ -117,6 +117,7 @@ export default Vue.extend({
             position: absolute;
             top: 0;
             right: 8px;
+            z-index: 100;
         }
     }
 }
