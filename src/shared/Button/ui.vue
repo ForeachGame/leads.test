@@ -59,10 +59,13 @@ button {
         margin: 0;
     }
     &:active {
-        background: #aaa;
+        border-color: #aaa;
     }
     &:hover {
         border-color: #333333;
+    }
+    &:disabled {
+        border: var(--vs-border-width) var(--vs-border-style) var(--vs-border-color);
     }
 }
 </style>

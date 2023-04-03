@@ -33,6 +33,7 @@ export default Vue.extend({
                     :limit="limit"
                 />
                 <w-pagination
+                    v-if="totalPages > limit"
                     :total="totalPages"
                     :limit="limit"
                     :current-page="Number(this.$route.query.page || '1')"

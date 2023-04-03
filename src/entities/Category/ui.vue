@@ -3,15 +3,18 @@ import Vue from 'vue'
 import { SButton } from '@/shared'
 import { TCategory } from '@/entities/Category/models'
 import { TArticle } from '@/entities/Article/models'
+import CategoryRemoveModal from '@/entities/Category/CategoryRemoveModal.vue'
 
 export default Vue.extend({
     name: 'ECategory',
     components: {
+        CategoryRemoveModal,
         SButton
     },
     data: () => ({
         arrArticles: [] as number[],
-        showChild: false
+        showChild: false,
+        showModal: false
     }),
     props: {
         id: {
@@ -33,6 +36,7 @@ export default Vue.extend({
     },
     methods: {
         removeCategory () {
+            this.toggleModal()
             this.$emit('articlesCount', [])
             this.$store.dispatch('removeCategory', this.$props.id)
         },
@@ -52,6 +56,9 @@ export default Vue.extend({
         },
         toggleShowChild () {
             this.showChild = !this.showChild
+        },
+        toggleModal () {
+            this.showModal = !this.showModal
         }
     },
     mounted () {
@@ -77,7 +84,7 @@ export default Vue.extend({
                     <s-button :border="false" :no-padding="true" @click="toggleShowChild">^</s-button>
                 </span>
             </div>
-            <div><s-button :border="false" :no-padding="true" @click="removeCategory">x</s-button></div>
+            <div><s-button :border="false" :no-padding="true" @click="toggleModal">x</s-button></div>
         </div>
         <div class="child" v-if="childrenCategories.length > 0" v-show="showChild">
             <e-category
@@ -90,6 +97,13 @@ export default Vue.extend({
                 @articlesCount="countArticles($event)"
             />
         </div>
+        <transition name="bounce">
+            <category-remove-modal
+                v-if="showModal"
+                @remove="removeCategory"
+                @closeModal="toggleModal"
+            />
+        </transition>
     </div>
 </template>
 
@@ -118,5 +132,22 @@ export default Vue.extend({
 }
 .child {
     padding-left: 15px;
+}
+.bounce-enter-active {
+    animation: bounce-in 0.5s;
+}
+.bounce-leave-active {
+    animation: bounce-in 0.5s reverse;
+}
+@keyframes bounce-in {
+    0% {
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1.25);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 </style>

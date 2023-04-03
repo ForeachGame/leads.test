@@ -18,12 +18,12 @@ type ArticleState = {
 const state: ArticleState = {
     articles: [],
     search: '',
-    activeCategoryArticles: []
+    activeCategoryArticles: null
 }
 
 const getters = {
     getArticles: (state: ArticleState): TArticle[] => {
-        return state.articles.filter(item => item.title.indexOf(state.search) !== -1 && (state.activeCategoryArticles?.includes(item.id) || state.activeCategoryArticles === null || state.activeCategoryArticles === []))
+        return state.articles.filter(item => item.title.indexOf(state.search) !== -1 && (state.activeCategoryArticles?.includes(item.id) || state.activeCategoryArticles === null || state.activeCategoryArticles.length === 0))
     },
     getAllArticlesCount: (state: ArticleState): number => {
         return state.articles.length
@@ -58,7 +58,7 @@ const actions = {
             setTimeout(() => {
                 const data = dataArticles as TArticle[]
                 commit('getArticles', data)
-            }, 1000)
+            }, 2000)
         })
     },
     addLike ({ commit }: { commit: Commit }, article: TArticle) {
